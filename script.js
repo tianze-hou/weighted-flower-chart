@@ -188,6 +188,6 @@ svg.append("text")
   .attr("text-anchor", "middle")
   .style("font-size", "12px")
   .style("fill", "#666")
-  .text("图表数据为随机生成，仅供参考，不代表作者观点。");
+  .text("图表数据为随机生成，仅供参考，不代表作者观点。 © 2024 Tianze-Hou");
 
 updateChart();
