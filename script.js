@@ -97,7 +97,8 @@ function updateChart() {
         .attr("y2", (d, i) => centerY + petalLengthScale(d.score) * Math.sin(i * angleStep) * 0.5)
         .attr("stroke", (d, i) => color(i))
         .attr("stroke-width", 12)
-        .attr("stroke-linecap", "round");
+        .attr("stroke-linecap", "round")
+        .attr("stroke-opacity", 0.8);
         
       countryGroup.selectAll(".center-dot")
         .data([d.weightedScore])
@@ -159,13 +160,13 @@ d3.select("#weight-sliders")
         svg.selectAll(".petal")
           .filter(d => d.category !== category)
           .attr("stroke-width", 12)
-          .attr("stroke-opacity", 0.5);
+          .attr("stroke-opacity", 0.4);
       })
       .on("mouseout", function() {
         // 重置所有花瓣的样式
         svg.selectAll(".petal")
           .attr("stroke-width", 12)
-          .attr("stroke-opacity", 1);
+          .attr("stroke-opacity", 0.8);
       });
   });
 
