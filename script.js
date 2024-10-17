@@ -15,7 +15,6 @@ const data = {
     { "name": "俄罗斯", "scores": { "经济": 76, "教育": 70, "环境": 58, "科技": 83, "医疗": 68, "文化": 75, "安全": 65, "基础设施": 70, "生活质量": 65 } },
     { "name": "埃及", "scores": { "经济": 62, "教育": 58, "环境": 52, "科技": 63, "医疗": 60, "文化": 70, "安全": 55, "基础设施": 60, "生活质量": 55 } },
     { "name": "阿根廷", "scores": { "经济": 72, "教育": 75, "环境": 62, "科技": 78, "医疗": 65, "文化": 80, "安全": 68, "基础设施": 70, "生活质量": 65 } }
-    
   ]
 };
 
@@ -33,7 +32,6 @@ const x = d3.scaleBand()
   .range([margin.left, width - margin.right])
   .padding(0.1);
 
-// 获取所有分数的最小值和最大值
 const allScores = data.countries.flatMap(country => Object.values(country.scores));
 const [minScore, maxScore] = d3.extent(allScores);
 
@@ -43,7 +41,7 @@ const y = d3.scaleLinear()
 
 const petalLengthScale = d3.scaleLinear()
   .domain([minScore, maxScore])
-  .range([0, 100]); // 花瓣的长度范围
+  .range([0, 100]);
 
 svg.append("g")
   .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -56,7 +54,6 @@ const categories = Object.keys(data.countries[0].scores);
 let weights = categories.map(() => 1 / categories.length);
 
 function updateChart() {
-  // 计算加权评分
   data.countries.forEach(country => {
     let weightedScore = 0;
     Object.entries(country.scores).forEach(([category, score], i) => {
@@ -74,7 +71,6 @@ function updateChart() {
       const countryGroup = d3.select(this);
       const scores = Object.entries(d.scores).map(([category, score], i) => ({ category, score, weight: weights[i] }));
 
-      // 绘制加权评分线
       countryGroup.selectAll(".weighted-score")
         .data([d.weightedScore])
         .join("line")
@@ -86,7 +82,6 @@ function updateChart() {
         .attr("stroke", "black")
         .attr("stroke-width", 2);
 
-      // 绘制花瓣
       const numCategories = categories.length;
       const angleStep = (2 * Math.PI) / numCategories;
       const centerX = x.bandwidth() / 2;
@@ -102,9 +97,8 @@ function updateChart() {
         .attr("y2", (d, i) => centerY + petalLengthScale(d.score) * Math.sin(i * angleStep) * 0.5)
         .attr("stroke", (d, i) => color(i))
         .attr("stroke-width", 12)
-        .attr("stroke-linecap", "round"); // 添加圆角
+        .attr("stroke-linecap", "round");
         
-      // 绘制花心
       countryGroup.selectAll(".center-dot")
         .data([d.weightedScore])
         .join("circle")
@@ -115,7 +109,6 @@ function updateChart() {
         .attr("fill", "white");
     });
 
-  // 更新右侧项目字体的颜色
   d3.select("#weight-sliders")
     .selectAll(".slider-container")
     .data(categories)
@@ -143,21 +136,40 @@ d3.select("#weight-sliders")
     const container = d3.select(this);
     container.append("label")
       .text(category)
-      .attr("class", "country-label");
+      .attr("class", "country-label")
+      .attr("style", `color: ${color(i)}`); // 确保标签颜色一致
+
     container.append("input")
       .attr("type", "range")
-      .attr("min", 0.1) // 设置最小值为0.1，而不是0
-      .attr("max", 4.99999) //不能为5，因为当五个slider的值都为5时，会导致权重计算出现问题
+      .attr("min", 0.1)
+      .attr("max", 4.99999)
       .attr("step", 0.01)
       .attr("value", 4)
       .attr("class", "slider")
       .on("input", function() {
         weights[i] = (5 - +this.value) / 5;
         updateWeights();
+
+        // 使用类别名称进行过滤
+        svg.selectAll(".petal")
+          .filter(d => d.category === category)
+          .attr("stroke-width", 16)
+          .attr("stroke-opacity", 1);
+
+        svg.selectAll(".petal")
+          .filter(d => d.category !== category)
+          .attr("stroke-width", 12)
+          .attr("stroke-opacity", 0.5);
+      })
+      .on("mouseout", function() {
+        // 重置所有花瓣的样式
+        svg.selectAll(".petal")
+          .attr("stroke-width", 12)
+          .attr("stroke-opacity", 1);
       });
   });
 
-// 添加水平线和数字标签
+
 const yAxisGridLines = d3.axisLeft(y)
   .tickSize(-width + margin.right + margin.left)
   .tickFormat(d3.format(".0f"));
@@ -172,7 +184,7 @@ svg.append("g")
 
 svg.append("text")
   .attr("x", width / 2)
-  .attr("y", height - 10) // 调整y坐标以放置在图表下方
+  .attr("y", height - 10)
   .attr("text-anchor", "middle")
   .style("font-size", "12px")
   .style("fill", "#666")
