@@ -6,6 +6,8 @@
 
 打开页面后，您将看到一个显示不同实体在各项指标上评分的图表。您可以使用页面右侧的滑块调整这些指标的权重。图表会根据权重的调整动态更新，显示重新计算的每个实体的加权评分。
 
+[![Demo](https://img.shields.io/badge/Demo-weighted--flower--chart-purple)](https://tianze-hou.github.io/weighted-flower-chart/)
+
 ## 数据结构
 
 数据的结构如下：
