@@ -1,6 +1,5 @@
-# 互动加权评分花瓣图可视化
 
-基于D3.js的互动加权评分可视化工具，允许用户调整不同数据指标的权重，并观察这些变化如何影响不同实体的总体评分。这个可视化工具的灵感来自OECD Better Life Index。
+基于D3.js的交互式加权评分花瓣图可视化，允许用户调整不同数据指标的权重，并观察这些变化如何影响不同实体的总体评分。这个可视化工具的灵感来自OECD Better Life Index。
 
 此项目的灵感来源于[OECD Better Life Index](https://www.oecdbetterlifeindex.org/)。
 
