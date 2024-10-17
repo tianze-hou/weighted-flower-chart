@@ -142,12 +142,12 @@ d3.select("#weight-sliders")
     container.append("input")
       .attr("type", "range")
       .attr("min", 0.1)
-      .attr("max", 4.99999)
+      .attr("max", 1)
       .attr("step", 0.01)
-      .attr("value", 4)
+      .attr("value", 0.2)
       .attr("class", "slider")
       .on("input", function() {
-        weights[i] = (5 - +this.value) / 5;
+        weights[i] = +this.value;
         updateWeights();
 
         // 使用类别名称进行过滤
