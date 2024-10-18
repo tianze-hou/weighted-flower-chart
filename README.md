@@ -1,15 +1,11 @@
 
 基于D3.js的交互式加权评分花瓣图可视化，允许用户调整不同数据指标的权重，并观察这些变化如何影响不同实体的总体评分。这个可视化工具的灵感来自OECD Better Life Index。
 
-此项目的灵感来源于[OECD Better Life Index](https://www.oecdbetterlifeindex.org/)。
-
-打开页面后，您将看到一个显示不同实体在各项指标上评分的图表。您可以使用页面右侧的滑块调整这些指标的权重。图表会根据权重的调整动态更新，显示重新计算的每个实体的加权评分。
+此项目灵感来源于[OECD Better Life Index](https://www.oecdbetterlifeindex.org/)。
 
 [![Demo](https://img.shields.io/badge/Demo-weighted--flower--chart-purple)](https://tianze-hou.github.io/weighted-flower-chart/)
 
 ## 数据结构
-
-数据的结构如下：
 
 ```json
 {
@@ -38,5 +34,5 @@
 
 ## 鸣谢
 
-- 感谢OECD Better Life Index的灵感。
+- 灵感源自[OECD Better Life Index](https://www.oecdbetterlifeindex.org/)。
 - 使用D3.js构建。
