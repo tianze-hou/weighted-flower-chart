@@ -1,5 +1,5 @@
 const data = {
-    "countries": [
+    "entities": [
         { "name": "美国", "scores": { "经济": 95, "教育": 90, "环境": 68, "科技": 98, "医疗": 83, "文化": 85, "安全": 75, "基础设施": 90, "生活质量": 88 } },
         { "name": "印度", "scores": { "经济": 78, "教育": 65, "环境": 55, "科技": 82, "医疗": 60, "文化": 80, "安全": 60, "基础设施": 65, "生活质量": 58 } },
         { "name": "德国", "scores": { "经济": 89, "教育": 93, "环境": 77, "科技": 90, "医疗": 85, "文化": 90, "安全": 83, "基础设施": 88, "生活质量": 85 } },
@@ -28,12 +28,12 @@ const svg = d3.select("#chart")
     .attr("height", height);
 
 const x = d3.scaleBand()
-    .domain(data.countries.map(d => d.name))
+    .domain(data.entities.map(d => d.name))
     .range([margin.left, width - margin.right])
     .padding(0.1);
 
 // 基于数据的上下极值，确定y轴的上下限
-const allScores = data.countries.flatMap(country => Object.values(country.scores));
+const allScores = data.entities.flatMap(country => Object.values(country.scores));
 const [minScore, maxScore] = d3.extent(allScores);
 const y = d3.scaleLinear()
     .domain([minScore, maxScore])
@@ -50,20 +50,20 @@ svg.append("g")
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-const categories = Object.keys(data.countries[0].scores);
+const categories = Object.keys(data.entities[0].scores);
 
 let weights = categories.map(() => 1 / categories.length);
 
 // 更新图表——封装为函数
 function updateChart() {
     // 计算每个国家的加权分数
-    data.countries.forEach(country => {
+    data.entities.forEach(country => {
         country.weightedScore = Object.entries(country.scores).reduce((sum, [category, score], i) => sum + score * weights[i], 0);
     });
 
     // 绘制国家名称、花瓣
     svg.selectAll(".country")
-        .data(data.countries)
+        .data(data.entities)
         .join("g")
         .attr("class", "country")
         .attr("transform", d => `translate(${x(d.name)},0)`)
