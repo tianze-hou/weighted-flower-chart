@@ -4,110 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demo</title>
-  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .container {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      max-width: 1200px;
-      margin: 20px;
-    }
-    .sidebar {
-      width: 250px;
-      padding: 20px;
-      border-left: 1px solid #ccc;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      margin-left: 20px;
-    }
-    .slider-container {
-      margin-bottom: 20px;
-    }
-    .slider {
-      width: 100%;
-      -webkit-appearance: none;
-      appearance: none;
-      height: 10px;
-      border-radius: 5px;
-      background: #d3d3d3;
-      outline: none;
-      opacity: 0.7;
-      transition: opacity .2s;
-    }
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #4CAF50;
-      cursor: pointer;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-    .slider::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #4CAF50;
-      cursor: pointer;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-    .country-label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-    #chart {
-      flex: 1;
-      margin: 20px;
-    }
-    #badge-container {
-      margin-top: 35px;
-      text-align: left;
-    }
-    svg {
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-    }
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: auto;
-        margin-left: 0;
-        margin-top: 20px;
-      }
-    }
-  </style>
+  <link rel="icon" href="favicon-256.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div id="chart"></div>
-    <div class="sidebar">
-      <h3>你最在乎的……</h3>
-      <div id="weight-sliders"></div>
-      <div id="badge-container">
-        <a href="https://github.com/tianze-hou/weighted-flower-chart">
-          <img src="https://img.shields.io/badge/GitHub-weighted--flower--chart-blue" alt="Go to the GitHub Repository">
-        </a>
-      </div>
+<div class="container">
+  <div id="chart"></div>
+  <div class="sidebar">
+    <h3>你最在乎的……</h3>
+    <div id="weight-sliders"></div>
+    <div id="badge-container">
+      <a href="https://github.com/tianze-hou/weighted-flower-chart">
+        <img src="https://img.shields.io/badge/GitHub-weighted--flower--chart-blue" alt="GitHub Repository">
+      </a>
     </div>
   </div>
-
-  <script src="https://d3js.org/d3.v6.min.js"></script>
-  <script src="script.js"></script>
+</div>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
