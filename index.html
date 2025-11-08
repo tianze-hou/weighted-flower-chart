@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <!-- 基本元信息 -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo</title>
+  <title>加权花卉图表 - 可视化数据对比</title>
+  
+  <!-- 资源引入 -->
   <link rel="icon" href="favicon-256.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-  <div id="chart"></div>
-  <div class="sidebar">
-    <h3>你最在乎的……</h3>
-    <div id="weight-sliders"></div>
-    <div id="badge-container">
-      <a href="https://github.com/tianze-hou/weighted-flower-chart">
-        <img src="https://img.shields.io/badge/GitHub-weighted--flower--chart-blue" alt="GitHub Repository">
-      </a>
-    </div>
+  <!-- 主容器 -->
+  <div class="container">
+    <!-- 图表区域 -->
+    <main id="chart"></main>
+    
+    <!-- 侧边控制面板 -->
+    <aside class="sidebar">
+      <h3>你最在乎的……</h3>
+      
+      <!-- 权重滑块容器 -->
+      <div id="weight-sliders"></div>
+      
+      <!-- GitHub 徽章 -->
+      <div id="badge-container">
+        <a href="https://github.com/tianze-hou/weighted-flower-chart" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/badge/GitHub-weighted--flower--chart-blue" alt="GitHub Repository">
+        </a>
+      </div>
+    </aside>
   </div>
-</div>
-<script src="https://d3js.org/d3.v6.min.js"></script>
-<script src="script.js"></script>
+  
+  <!-- 脚本引入 -->
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

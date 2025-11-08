@@ -1,87 +1,117 @@
+/* 全局样式 */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* 主容器 */
 .container {
-    display: flex;
-    flex-direction: row;
-    max-width: 1200px;
-    width: 100%;
-    margin: 20px;
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+  width: 100%;
+  margin: 20px;
 }
 
+/* 图表区域 */
+#chart {
+  flex: 1;
+  margin: 20px;
+}
+
+/* SVG样式 */
+svg {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* 侧边栏 */
 .sidebar {
-    width: 250px;
-    padding: 20px;
-    border-left: 1px solid #ccc;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    margin-left: 20px;
+  width: 250px;
+  padding: 20px;
+  border-left: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-left: 20px;
 }
 
+/* 滑块容器 */
 .slider-container {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
+/* 标签样式 */
+.country-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* 滑块样式 */
 .slider {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 10px;
-    border-radius: 5px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    transition: opacity .2s;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
 }
 
+/* 滑块悬停效果 */
+.slider:hover {
+  opacity: 1;
+}
+
+/* 滑块按钮样式 */
 .slider::-webkit-slider-thumb,
 .slider::-moz-range-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease;
 }
 
-.country-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
+/* 滑块按钮悬停效果 */
+.slider::-webkit-slider-thumb:hover,
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
 }
 
-#chart {
-    flex: 1;
-    margin: 20px;
-}
-
+/* GitHub徽章容器 */
 #badge-container {
-    margin-top: 35px;
-    text-align: left;
+  margin-top: 35px;
+  text-align: left;
 }
 
-svg {
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
-
+/* 响应式布局 */
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: auto;
-        margin: 20px 0 0;
-    }
+  .container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: auto;
+    margin: 20px 0 0;
+    border-left: none;
+    border-top: 1px solid #ccc;
+  }
+  
+  #chart {
+    margin: 20px 20px 0;
+  }
 }
