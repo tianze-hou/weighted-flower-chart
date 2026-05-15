@@ -47,24 +47,11 @@ svg {
   margin-bottom: 20px;
 }
 
-/* 标签行 */
-.label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
 /* 标签样式 */
 .country-label {
   font-weight: bold;
-}
-
-/* 权重百分比 */
-.weight-value {
-  font-size: 12px;
-  color: #666;
-  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
 }
 
 /* 滑块样式 */
@@ -85,8 +72,9 @@ svg {
   opacity: 1;
 }
 
-/* Webkit 滑块按钮样式 */
-.slider::-webkit-slider-thumb {
+/* 滑块按钮样式 */
+.slider::-webkit-slider-thumb,
+.slider::-moz-range-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 20px;
@@ -98,77 +86,15 @@ svg {
   transition: transform 0.1s ease;
 }
 
-/* Webkit 滑块按钮悬停效果 */
-.slider::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-}
-
-/* Firefox 滑块按钮样式 */
-.slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border: none;
-  border-radius: 50%;
-  background: #4CAF50;
-  cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.1s ease;
-}
-
-/* Firefox 滑块按钮悬停效果 */
+/* 滑块按钮悬停效果 */
+.slider::-webkit-slider-thumb:hover,
 .slider::-moz-range-thumb:hover {
   transform: scale(1.1);
 }
 
-/* Tooltip */
-.tooltip {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 12px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  z-index: 100;
-  white-space: nowrap;
-}
-
-.tooltip.visible {
-  opacity: 1;
-}
-
-/* 重置按钮 */
-.reset-btn {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-
-.reset-btn:hover {
-  background-color: #45a049;
-}
-
-.sort-btn {
-  background-color: #2196F3;
-  margin-top: 8px;
-}
-
-.sort-btn:hover {
-  background-color: #1976D2;
-}
-
 /* GitHub徽章容器 */
 #badge-container {
-  margin-top: 20px;
+  margin-top: 35px;
   text-align: left;
 }
 
