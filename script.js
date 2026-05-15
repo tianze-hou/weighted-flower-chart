@@ -56,10 +56,15 @@ function setupScales() {
   calculateScoreExtremes();
   
   // 创建SVG容器
+  const containerWidth = document.getElementById("chart").clientWidth || CHART_CONFIG.width;
+  const svgWidth = Math.min(containerWidth, CHART_CONFIG.width);
+
   svg = d3.select("#chart")
     .append("svg")
-    .attr("width", CHART_CONFIG.width)
-    .attr("height", CHART_CONFIG.height);
+    .attr("viewBox", `0 0 ${CHART_CONFIG.width} ${CHART_CONFIG.height}`)
+    .attr("preserveAspectRatio", "xMidYMid meet")
+    .style("width", "100%")
+    .style("height", "auto");
 
   // 创建比例尺
   x = d3.scaleBand()
@@ -81,6 +86,7 @@ function setupScales() {
 // 绘制x轴
 function drawXAxis() {
   svg.append("g")
+    .attr("class", "x-axis")
     .attr("transform", `translate(0,${CHART_CONFIG.height - CHART_CONFIG.margin.bottom})`)
     .call(d3.axisBottom(x));
 }
@@ -123,6 +129,7 @@ function updateChart() {
         .attr("x1", centerX)
         .attr("x2", centerX)
         .attr("y1", y(minScore))
+        .transition().duration(300)
         .attr("y2", centerY)
         .attr("stroke", "black")
         .attr("stroke-width", 2);
@@ -132,6 +139,7 @@ function updateChart() {
         .data(scores)
         .join("line")
         .attr("class", "petal")
+        .transition().duration(300)
         .attr("x1", centerX)
         .attr("y1", centerY)
         .attr("x2", (d, i) => centerX + petalLengthScale(d.score) * Math.cos(i * angleStep) * 0.5)
@@ -139,7 +147,20 @@ function updateChart() {
         .attr("stroke", (d, i) => color(i))
         .attr("stroke-width", CHART_CONFIG.petal.defaultWidth)
         .attr("stroke-linecap", "round")
-        .attr("stroke-opacity", CHART_CONFIG.petal.defaultOpacity);
+        .attr("stroke-opacity", CHART_CONFIG.petal.defaultOpacity)
+        .on("mouseover", function(event, d) {
+          const tooltip = d3.select("#tooltip");
+          tooltip.classed("visible", true)
+            .html(`<strong>${d.category}</strong><br/>分数: ${d.score}<br/>权重: ${(d.weight * 100).toFixed(1)}%`);
+        })
+        .on("mousemove", function(event) {
+          const tooltip = d3.select("#tooltip");
+          tooltip.style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 10) + "px");
+        })
+        .on("mouseout", function() {
+          d3.select("#tooltip").classed("visible", false);
+        });
 
       // 绘制中心点
       countryGroup.selectAll(".center-dot")
@@ -147,6 +168,7 @@ function updateChart() {
         .join("circle")
         .attr("class", "center-dot")
         .attr("cx", centerX)
+        .transition().duration(300)
         .attr("cy", centerY)
         .attr("r", 5)
         .attr("fill", "white");
@@ -169,6 +191,18 @@ function updateWeights() {
   const totalWeight = weights.reduce((a, b) => a + b, 0);
   weights = weights.map(w => w / totalWeight);
   updateChart();
+  updateSliderLabels();
+}
+
+// 更新滑块标签上的权重百分比
+function updateSliderLabels() {
+  d3.select("#weight-sliders")
+    .selectAll(".slider-container")
+    .each(function(_, i) {
+      const container = d3.select(this);
+      const percentage = (weights[i] * 100).toFixed(1);
+      container.select(".weight-value").text(`${percentage}%`);
+    });
 }
 
 // 添加滑块控件
@@ -181,11 +215,17 @@ function setupSliders() {
     .each(function(category, i) {
       const container = d3.select(this);
       
-      // 添加标签
-      container.append("label")
+      // 添加标签行
+      const labelRow = container.append("div").attr("class", "label-row");
+
+      labelRow.append("label")
         .text(category)
         .attr("class", "country-label")
         .attr("style", `color: ${color(i)}`);
+
+      labelRow.append("span")
+        .attr("class", "weight-value")
+        .text(`${(weights[i] * 100).toFixed(1)}%`);
 
       // 添加滑块
       container.append("input")
@@ -193,7 +233,7 @@ function setupSliders() {
         .attr("min", 0.1)
         .attr("max", 1)
         .attr("step", 0.01)
-        .attr("value", 0.2)
+        .attr("value", weights[i])
         .attr("class", "slider")
         .on("input", function() {
           weights[i] = +this.value;
@@ -217,6 +257,45 @@ function setupSliders() {
             .attr("stroke-opacity", CHART_CONFIG.petal.defaultOpacity);
         });
     });
+
+  // 绑定重置按钮事件
+  d3.select("#reset-btn").on("click", resetWeights);
+
+  // 绑定排序按钮事件
+  d3.select("#sort-btn").on("click", sortByWeightedScore);
+}
+
+// 重置权重为均匀分布
+function resetWeights() {
+  const equalWeight = 1 / categories.length;
+  weights = categories.map(() => equalWeight);
+
+  // 同步滑块值
+  d3.select("#weight-sliders")
+    .selectAll(".slider")
+    .property("value", equalWeight);
+
+  updateChart();
+  updateSliderLabels();
+}
+
+// 按加权总分排序
+function sortByWeightedScore() {
+  calculateWeightedScores();
+  data.entities.sort((a, b) => b.weightedScore - a.weightedScore);
+
+  // 更新 x 轴比例尺的 domain
+  x.domain(data.entities.map(d => d.name));
+
+  // 更新 x 轴
+  svg.selectAll(".x-axis").remove();
+  svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0,${CHART_CONFIG.height - CHART_CONFIG.margin.bottom})`)
+    .transition().duration(500)
+    .call(d3.axisBottom(x));
+
+  updateChart();
 }
 
 // 创建并绘制网格线
